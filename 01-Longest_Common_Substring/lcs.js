@@ -1,0 +1,1 @@
+let[,,...a]=process.argv;((e="",...l)=>{let o=s="";for(let r of e)s+=r,l.every(e=>e.includes(s))?o=s:s=s.slice(1);console.log(o)})(...a.sort())
