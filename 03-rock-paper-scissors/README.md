@@ -8,5 +8,8 @@ npm install
 npm start
 ```
 
-**_Demo_**
-![demo](./demo.gif)
+**_Demo 1_**
+![demo](./demo-1.gif)
+
+**_Demo 2_**
+![demo](./demo-2.gif)
