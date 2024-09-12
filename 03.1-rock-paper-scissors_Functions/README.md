@@ -3,7 +3,7 @@
 **_Start:_**
 
 ```cmd
-cd 03-rock-paper-scissors
+cd 03.1-rock-paper-scissors_Functions
 npm install
 npm start
 ```
