@@ -1,0 +1,17 @@
+{
+  "name": "03.2-rock-paper-scissors_oop",
+  "version": "1.0.0",
+  "description": "generalized rock-paper-scissors game",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index"
+  },
+  "keywords": [],
+  "author": "Aliaksei-Uzin",
+  "license": "ISC",
+  "dependencies": {
+    "@inquirer/prompts": "^5.5.0",
+    "console-table-printer": "^2.12.1"
+  }
+}
