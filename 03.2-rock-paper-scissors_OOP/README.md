@@ -9,7 +9,4 @@ npm start Stone Spock Paper Lizard Scissors Frog Dragon
 ```
 
 **_Demo 1_**
-![demo]()
-
-**_Demo 2_**
-![demo]()
+![demo](./assets/record.gif)
