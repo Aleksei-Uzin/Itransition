@@ -1,7 +1,7 @@
 export class Computer {
   #options
 
-  constructor(options) {
+  constructor(options = []) {
     this.#options = options
   }
 
