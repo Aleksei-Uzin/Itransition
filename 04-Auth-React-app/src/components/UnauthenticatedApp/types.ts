@@ -1,3 +1,5 @@
+import { User } from 'firebase/auth'
+
 export type UnauthenticatedAppProps = {
-  setUser: (username: string) => void
+  setUser: (username: User) => void
 }

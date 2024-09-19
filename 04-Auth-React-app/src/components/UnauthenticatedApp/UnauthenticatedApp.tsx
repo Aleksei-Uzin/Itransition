@@ -1,24 +1,34 @@
+import { useState } from 'react'
 import { LoginForm, LoginFormParamsType } from '../LoginForm'
 import { Modal, ModalOpenButton, ModalProvider } from '../Modal'
 import { Button } from '../Button'
-import { addUser, authRegister } from '../../api'
+import { addUser, auth, authLogin, authRegister, STATUS } from '../../api'
 import { UnauthenticatedAppProps } from './types'
+import { updateProfile } from 'firebase/auth'
 
 export const UnauthenticatedApp = ({ setUser }: UnauthenticatedAppProps) => {
+  const [status, setStatus] = useState<STATUS>(STATUS.IDLE)
+  const isLoading = status === STATUS.PENDING
+
   const login = async ({ email, password }: LoginFormParamsType) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const userCredential = await authRegister({ email, password })
-    // TODO: setting up username
-    setUser('mr. John')
+    setStatus(STATUS.PENDING)
+    const userCredential = await authLogin({ email, password })
+    setUser(userCredential.user)
+    setStatus(STATUS.RESOLVED)
   }
 
   const register = async ({ email, name, password }: LoginFormParamsType) => {
+    setStatus(STATUS.PENDING)
     const userCredential = await authRegister({ email, password })
+    await updateProfile(auth.currentUser!, {
+      displayName: name,
+    })
     const { creationTime = Date(), lastSignInTime = Date() } =
       userCredential.user.metadata
 
     addUser({ name, email, creationTime, lastSignInTime, status: true })
-    setUser(name)
+    setUser(userCredential.user)
+    setStatus(STATUS.RESOLVED)
   }
 
   return (
@@ -30,7 +40,7 @@ export const UnauthenticatedApp = ({ setUser }: UnauthenticatedAppProps) => {
             <Button>Login</Button>
           </ModalOpenButton>
           <Modal title="Login">
-            <LoginForm onSubmit={login} />
+            <LoginForm isLoading={isLoading} onSubmit={login} />
           </Modal>
         </ModalProvider>
         <ModalProvider>
@@ -38,7 +48,11 @@ export const UnauthenticatedApp = ({ setUser }: UnauthenticatedAppProps) => {
             <Button>Register</Button>
           </ModalOpenButton>
           <Modal title="Register">
-            <LoginForm type="register" onSubmit={register} />
+            <LoginForm
+              isLoading={isLoading}
+              type="register"
+              onSubmit={register}
+            />
           </Modal>
         </ModalProvider>
       </div>
