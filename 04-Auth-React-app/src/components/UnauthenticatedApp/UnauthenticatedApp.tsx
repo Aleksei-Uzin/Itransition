@@ -19,15 +19,20 @@ export const UnauthenticatedApp = ({ setUser }: UnauthenticatedAppProps) => {
 
   const register = async ({ email, name, password }: LoginFormParamsType) => {
     setStatus(STATUS.PENDING)
-    const userCredential = await authRegister({ email, password })
+    const { user } = await authRegister({ email, password })
     await updateProfile(auth.currentUser!, {
       displayName: name,
     })
-    const { creationTime = Date(), lastSignInTime = Date() } =
-      userCredential.user.metadata
+    const { creationTime = Date(), lastSignInTime = Date() } = user.metadata
 
-    addUser({ name, email, creationTime, lastSignInTime, status: true })
-    setUser(userCredential.user)
+    addUser({
+      name,
+      email,
+      creationTime,
+      lastSignInTime,
+      status: true,
+    })
+    setUser({ ...user, displayName: name })
     setStatus(STATUS.RESOLVED)
   }
 
