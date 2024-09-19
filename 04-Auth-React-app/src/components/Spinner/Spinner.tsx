@@ -1,5 +1,5 @@
 export const Spinner = () => (
-  <div role="status">
+  <span role="status">
     <svg
       aria-hidden="true"
       className="inline w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
@@ -17,5 +17,5 @@ export const Spinner = () => (
       />
     </svg>
     <span className="sr-only">Loading...</span>
-  </div>
+  </span>
 )
