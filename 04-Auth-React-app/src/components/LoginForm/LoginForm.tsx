@@ -3,7 +3,11 @@ import { FormGroup } from './FormGroup'
 import { Input } from './Input'
 import { LoginFormProps } from './types'
 
-export const LoginForm = ({ onSubmit, type = 'login' }: LoginFormProps) => {
+export const LoginForm = ({
+  isLoading,
+  onSubmit,
+  type = 'login',
+}: LoginFormProps) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
@@ -34,7 +38,7 @@ export const LoginForm = ({ onSubmit, type = 'login' }: LoginFormProps) => {
         <Input id="password" type="password" />
       </FormGroup>
       <div className="mt-4">
-        <Button>Submit</Button>
+        <Button isLoading={isLoading}>Submit</Button>
       </div>
     </form>
   )

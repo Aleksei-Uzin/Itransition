@@ -5,6 +5,7 @@ export interface LoginFormParamsType {
 }
 
 export type LoginFormProps = {
+  isLoading: boolean
   type?: 'login' | 'register'
   onSubmit: ({ email, password }: LoginFormParamsType) => void
 }
