@@ -25,7 +25,7 @@ function App() {
 
   if (status === STATUS.RESOLVED) {
     return user ? (
-      <AuthenticatedApp user={user} setUser={handleSetUser} />
+      <AuthenticatedApp user={user} />
     ) : (
       <UnauthenticatedApp setUser={handleSetUser} />
     )
