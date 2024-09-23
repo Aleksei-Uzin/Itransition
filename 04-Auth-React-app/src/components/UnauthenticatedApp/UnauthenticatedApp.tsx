@@ -1,39 +1,64 @@
 import { useState } from 'react'
-import { LoginForm, LoginFormParamsType } from '../LoginForm'
+import { LoginForm, LoginFormParams, RegisterFormParams } from '../LoginForm'
 import { Modal, ModalOpenButton, ModalProvider } from '../Modal'
 import { Button } from '../Button'
-import { addUser, auth, authLogin, authRegister, STATUS } from '../../api'
-import { UnauthenticatedAppProps } from './types'
+import {
+  addUser,
+  auth,
+  authLogin,
+  authRegister,
+  STATUS,
+  updateUserTime,
+} from '../../api'
+import { State, UnauthenticatedAppProps } from './types'
 import { updateProfile } from 'firebase/auth'
+import { getCurrDateAndTime } from './utils'
 
 export const UnauthenticatedApp = ({ setUser }: UnauthenticatedAppProps) => {
-  const [status, setStatus] = useState<STATUS>(STATUS.IDLE)
+  const [state, setState] = useState<State>({
+    status: STATUS.IDLE,
+  })
+  const { status, error } = state
   const isLoading = status === STATUS.PENDING
 
-  const login = async ({ email, password }: LoginFormParamsType) => {
-    setStatus(STATUS.PENDING)
-    const userCredential = await authLogin({ email, password })
-    setUser(userCredential.user)
-    setStatus(STATUS.RESOLVED)
+  const login = async ({ email, password }: LoginFormParams) => {
+    setState({ status: STATUS.PENDING })
+
+    try {
+      await Promise.all([
+        authLogin({ email, password }),
+        updateUserTime(email, getCurrDateAndTime()),
+      ])
+      setState({ status: STATUS.RESOLVED })
+    } catch (error) {
+      setState({ status: STATUS.REJECTED, error: (error as Error).message })
+    }
   }
 
-  const register = async ({ email, name, password }: LoginFormParamsType) => {
-    setStatus(STATUS.PENDING)
-    const { user } = await authRegister({ email, password })
-    await updateProfile(auth.currentUser!, {
-      displayName: name,
-    })
-    const { creationTime = Date(), lastSignInTime = Date() } = user.metadata
+  const register = async ({ email, password, name }: RegisterFormParams) => {
+    setState({ status: STATUS.PENDING })
 
-    addUser({
-      name,
-      email,
-      creationTime,
-      lastSignInTime,
-      status: true,
-    })
-    setUser({ ...user, displayName: name })
-    setStatus(STATUS.RESOLVED)
+    try {
+      const newUser = await authRegister({ email, password })
+      const currTime = getCurrDateAndTime()
+      await Promise.all([
+        updateProfile(auth.currentUser!, {
+          displayName: name,
+        }),
+        addUser({
+          authUID: newUser.uid,
+          creationTime: currTime,
+          email,
+          lastSignInTime: currTime,
+          name,
+          status: true,
+        }),
+      ])
+      setUser({ ...newUser, displayName: name })
+      setState({ status: STATUS.RESOLVED })
+    } catch (error) {
+      setState({ status: STATUS.REJECTED, error: (error as Error).message })
+    }
   }
 
   return (
@@ -45,7 +70,7 @@ export const UnauthenticatedApp = ({ setUser }: UnauthenticatedAppProps) => {
             <Button>Login</Button>
           </ModalOpenButton>
           <Modal title="Login">
-            <LoginForm isLoading={isLoading} onSubmit={login} />
+            <LoginForm isLoading={isLoading} error={error} onSubmit={login} />
           </Modal>
         </ModalProvider>
         <ModalProvider>
@@ -55,6 +80,7 @@ export const UnauthenticatedApp = ({ setUser }: UnauthenticatedAppProps) => {
           <Modal title="Register">
             <LoginForm
               isLoading={isLoading}
+              error={error}
               type="register"
               onSubmit={register}
             />
