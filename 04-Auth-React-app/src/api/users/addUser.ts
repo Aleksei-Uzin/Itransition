@@ -1,7 +1,8 @@
+import { BASE_URL } from './constants'
 import { UserData } from './types'
 
 export const addUser = async (userData: UserData) => {
-  const response = await fetch('http://localhost:5050/users', {
+  const response = await fetch(BASE_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -9,5 +10,7 @@ export const addUser = async (userData: UserData) => {
     body: JSON.stringify(userData),
   })
 
-  return response
+  const result = await response.json()
+
+  return result
 }

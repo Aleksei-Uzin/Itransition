@@ -1,7 +1,8 @@
-import { FetchedUser } from './types'
+import { BASE_URL } from './constants'
+import { FetchedUser, ProcessedUser } from './types'
 
 export const fetchUsers = async () => {
-  const response = await fetch('http://localhost:5050/users')
+  const response = await fetch(BASE_URL)
 
   if (!response.ok) {
     const message = `fetchUsers error occurred: ${response.statusText}`
@@ -9,6 +10,13 @@ export const fetchUsers = async () => {
     return
   }
 
-  const users = await response.json()
-  return users as FetchedUser[]
+  const fetchedUsers: FetchedUser[] = await response.json()
+  const processedUsers: ProcessedUser[] = fetchedUsers.map(
+    ({ _id, ...rest }) => ({
+      id: _id,
+      ...rest,
+    })
+  )
+
+  return processedUsers
 }

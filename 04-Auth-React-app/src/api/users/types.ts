@@ -1,13 +1,18 @@
 export interface UserData {
-  name: string
-  email: string
+  authUID: string
   creationTime: string
+  email: string
   lastSignInTime: string
+  name: string
   status: boolean
 }
 
 export interface FetchedUser extends UserData {
   _id: string
+}
+
+export interface ProcessedUser extends UserData {
+  id: string
 }
 
 export enum STATUS {
