@@ -12,5 +12,5 @@ export const addUser = async (userData: UserData) => {
 
   const result = await response.json()
 
-  return result
+  return result as { insertedId: string }
 }
