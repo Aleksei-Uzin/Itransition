@@ -1,13 +1,18 @@
-export interface LoginFormParamsType {
+export interface LoginFormParams {
   email: string
-  name: string
   password: string
+}
+
+export interface RegisterFormParams extends LoginFormParams {
+  name: string
 }
 
 export type LoginFormProps = {
   isLoading: boolean
+  error?: string
   type?: 'login' | 'register'
-  onSubmit: ({ email, password }: LoginFormParamsType) => void
+  onSubmit(params: LoginFormParams): void
+  onSubmit(params: RegisterFormParams): void
 }
 
 export type InputProps = {

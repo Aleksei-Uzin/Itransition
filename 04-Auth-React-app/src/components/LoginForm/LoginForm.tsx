@@ -5,6 +5,7 @@ import { LoginFormProps } from './types'
 
 export const LoginForm = ({
   isLoading,
+  error,
   onSubmit,
   type = 'login',
 }: LoginFormProps) => {
@@ -15,9 +16,9 @@ export const LoginForm = ({
     const { email, name, password } = (event.target as HTMLFormElement).elements
 
     onSubmit({
-      name: name?.value || '',
       email: email.value,
       password: password.value,
+      name: name?.value,
     })
   }
 
@@ -37,6 +38,7 @@ export const LoginForm = ({
         <label htmlFor="password">Password</label>
         <Input id="password" type="password" />
       </FormGroup>
+      {error && <div className="text-red-500">{error}</div>}
       <div className="mt-4">
         <Button isLoading={isLoading}>Submit</Button>
       </div>
