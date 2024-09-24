@@ -11,13 +11,13 @@ export const AuthenticatedApp = ({ user }: AuthenticatedAppProps) => {
 
   return (
     <>
-      <div className="flex justify-end items-center gap-4 px-10 py-4">
+      <div className="flex justify-center items-center gap-4 px-10 py-4">
         <span className="text-xl font-semibold">
           Welcome {!name ? <Spinner /> : name}
         </span>
         <Button onClick={logout}>Logout</Button>
       </div>
-      <Table user={user} />
+      <Table />
     </>
   )
 }
