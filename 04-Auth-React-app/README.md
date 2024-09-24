@@ -1,10 +1,48 @@
-# React + TypeScript + Vite
+# Web application with registration and authentication
 
-**_Fix:_** Missing dependencies warning React doesn't show up
+## Requirements and description
 
-```eslint.config.js
-'react/react-in-jsx-scope': 'off'
-```
+1. Non-authenticated users should not have access to the user management (admin panel) - **done**
+
+2. Only authenticated users should have access the user management table - **done**
+
+3. Table should have the following columns:
+
+   - id, name, e-mail, last login time, registration time, status (active/blocked) - **done**
+
+4. The leftmost column of the table should contains checkboxes without labels for multiple selection - **done**
+
+5. There must be a toolbar over the table with the following actions:
+
+   - **Block** (red button with text) - **done**
+
+   - **Unblock** (icon) - **done**
+
+   - **Delete** (icon) - **done**
+
+6. CSS framework: Tailwind CSS - **done**
+
+7. All users should be able to block or delete themselves or any other user - **done**
+
+8. If user account is blocked or deleted any next user’s request should redirect to the login page - **done**
+
+9. User can use any non-empty password (even one character) - **No, the minimum password is 6 chars**
+
+10. Blocked user should not be able to login, deleted user can re-register - **done**
+
+## Resources
+
+- Firebase Authentication [link](https://console.firebase.google.com/u/0/)
+
+- Firebase Admin Manage Users [link](https://firebase.google.com/docs/auth/admin/manage-users)
+
+- MongoDB Atlas [link](https://cloud.mongodb.com/v2/66e83ad39dd1012687617fa1#/clusters)
+
+- MongoDB with Node.js [link](https://www.mongodb.com/resources/languages/mongodb-with-nodejs)
+
+- MERN Stack Explained [link](https://www.mongodb.com/resources/languages/mern-stack)
+
+### Start project
 
 ```cmd
 cd 04-Auth-React-app
@@ -12,51 +50,8 @@ npm install
 npm run dev
 ```
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**_Fix:_** Missing dependencies warning React doesn't show up
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```eslint.config.js
+'react/react-in-jsx-scope': 'off'
 ```
