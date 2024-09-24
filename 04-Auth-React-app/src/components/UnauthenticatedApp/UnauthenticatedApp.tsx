@@ -25,10 +25,8 @@ export const UnauthenticatedApp = ({ setUser }: UnauthenticatedAppProps) => {
     setState({ status: STATUS.PENDING })
 
     try {
-      await Promise.all([
-        authLogin({ email, password }),
-        updateUserTime(email, getCurrDateAndTime()),
-      ])
+      await authLogin({ email, password })
+      await Promise.all([updateUserTime(email, getCurrDateAndTime())])
       setState({ status: STATUS.RESOLVED })
     } catch (error) {
       setState({ status: STATUS.REJECTED, error: (error as Error).message })
