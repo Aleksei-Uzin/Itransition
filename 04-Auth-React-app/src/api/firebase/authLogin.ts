@@ -3,8 +3,6 @@ import { AuthRegisterParamsType } from './types'
 import { auth } from './firebase'
 
 export const authLogin = ({ email, password }: AuthRegisterParamsType) =>
-  signInWithEmailAndPassword(auth, email, password)
-    .then(userCredential => userCredential.user)
-    .catch(() => {
-      throw new Error('Invalid login credentials')
-    })
+  signInWithEmailAndPassword(auth, email, password).then(
+    userCredential => userCredential.user
+  )
