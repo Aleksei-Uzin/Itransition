@@ -1,3 +1,3 @@
-import { LoginFormParamsType } from '../../components/LoginForm'
+import { RegisterFormParams } from '../../components/LoginForm'
 
-export type AuthRegisterParamsType = Omit<LoginFormParamsType, 'name'>
+export type AuthRegisterParamsType = Omit<RegisterFormParams, 'name'>
