@@ -35,7 +35,7 @@ export const LoginForm = ({
         <Input id="email" type="email" />
       </FormGroup>
       <FormGroup>
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">Password (at least 6 chars)</label>
         <Input id="password" type="password" />
       </FormGroup>
       {error && <div className="text-red-500">{error}</div>}
