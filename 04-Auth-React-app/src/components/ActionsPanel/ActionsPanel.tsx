@@ -16,7 +16,7 @@ export const ActionsPanel = ({
   const handleBlock = async () => {
     setAction('block')
     await Promise.all(
-      selectedUsers.map(user => updateUserStatus(user.id, user.authUID, false))
+      selectedUsers.map(({ id, email }) => updateUserStatus(id, email, false))
     )
 
     if (isSelected) {
@@ -30,7 +30,7 @@ export const ActionsPanel = ({
   const handleUnblock = async () => {
     setAction('unblock')
     await Promise.all(
-      selectedUsers.map(user => updateUserStatus(user.id, user.authUID, true))
+      selectedUsers.map(({ id, email }) => updateUserStatus(id, email, true))
     )
     setAction(null)
     setStatus()
@@ -39,7 +39,7 @@ export const ActionsPanel = ({
   const handleDelete = async () => {
     setAction('delete')
     await Promise.all(
-      selectedUsers.map(({ id, authUID }) => deleteUser(id, authUID))
+      selectedUsers.map(({ id, email }) => deleteUser(id, email))
     )
 
     if (isSelected) {
