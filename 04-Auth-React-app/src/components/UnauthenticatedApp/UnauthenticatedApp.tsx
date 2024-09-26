@@ -37,21 +37,18 @@ export const UnauthenticatedApp = ({ setUser }: UnauthenticatedAppProps) => {
     setState({ status: STATUS.PENDING })
 
     try {
-      const newUser = await authRegister({ email, password })
       const currTime = getCurrDateAndTime()
-      await Promise.all([
-        updateProfile(auth.currentUser!, {
-          displayName: name,
-        }),
-        addUser({
-          authUID: newUser.uid,
-          creationTime: currTime,
-          email,
-          lastSignInTime: currTime,
-          name,
-          status: true,
-        }),
-      ])
+      await addUser({
+        creationTime: currTime,
+        email,
+        lastSignInTime: currTime,
+        name,
+        status: true,
+      })
+      const newUser = await authRegister({ email, password })
+      updateProfile(auth.currentUser!, {
+        displayName: name,
+      })
       setUser({ ...newUser, displayName: name })
       setState({ status: STATUS.RESOLVED })
     } catch (error) {
