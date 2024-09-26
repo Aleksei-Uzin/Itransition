@@ -10,6 +10,10 @@ export const addUser = async (userData: UserData) => {
     body: JSON.stringify(userData),
   })
 
+  if (!response.ok) {
+    throw new Error(await response.text())
+  }
+
   const result = await response.json()
 
   return result as { insertedId: string }

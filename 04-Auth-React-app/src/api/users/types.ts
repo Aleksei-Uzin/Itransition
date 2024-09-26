@@ -1,5 +1,4 @@
 export interface UserData {
-  authUID: string
   creationTime: string
   email: string
   lastSignInTime: string
